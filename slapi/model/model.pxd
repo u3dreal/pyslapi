@@ -26,6 +26,9 @@ cdef extern from "SketchUpAPI/model/model.h":
         SUModelUnits_Centimeters,
         SUModelUnits_Meters
 
+    enum SUModelLoadStatus:
+        SUModelLoadStatus_Success = 0,
+        SUModelLoadStatus_Success_MoreRecent
 
     enum SUModelVersion:
         SUModelVersion_SU3,
@@ -38,10 +41,15 @@ cdef extern from "SketchUpAPI/model/model.h":
         SUModelVersion_SU2014,
         SUModelVersion_SU2015,
         SUModelVersion_SU2016,
-        SUModelVersion_SU2017
+        SUModelVersion_SU2017,
+        SUModelVersion_SU2018,
+        SUModelVersion_SU2019,
+        SUModelVersion_SU2020,
+        SUModelVersion_SU2021
 
     SU_RESULT SUModelCreate(SUModelRef* model)
     SU_RESULT SUModelCreateFromFile(SUModelRef* model, const char* file_path)
+    SU_RESULT SUModelCreateFromFileWithStatus(SUModelRef* model, const char* file_path, SUModelLoadStatus* status)
     SU_RESULT SUModelRelease(SUModelRef* model)
     #SUModelRef SUModelFromExisting(uintptr_t data)
     SU_RESULT SUModelGetEntities(SUModelRef model, SUEntitiesRef* entities)

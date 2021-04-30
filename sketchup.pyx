@@ -325,8 +325,11 @@ cdef class Texture:
         self.tex_ref.ptr = <void*> 0
 
     def write(self, filename):
+        print(filename)
         py_byte_string = filename.encode('UTF-8')
+        print(py_byte_string)
         cdef const char* file_path = py_byte_string
+        print(file_path)
         check_result(SUTextureWriteToFile(self.tex_ref, file_path))
 
     property name:
@@ -666,7 +669,7 @@ cdef class Face:
             cdef SUEdgeRef*edges_array = <SUEdgeRef*>malloc(sizeof(SUEdgeRef) * edge_count)
             cdef size_t count = 0
             check_result(SUFaceGetEdges(self.face_ref, edge_count, edges_array, &count))
-            
+
             edges_list = []
 
             for i in range(count):
@@ -940,6 +943,7 @@ cdef class LoopInput:
 
 cdef class Model:
     cdef SUModelRef model
+    cdef SUModelLoadStatus status
 
     def __cinit__(self, **kwargs):
         self.model.ptr = <void*> 0
@@ -951,7 +955,8 @@ cdef class Model:
         res = Model(__skip_init=True)
         py_byte_string = filename.encode('UTF-8')
         cdef const char* f = py_byte_string
-        check_result(SUModelCreateFromFile(&(res.model), f))
+        #check_result(SUModelCreateFromFile(&(res.model), f))
+        check_result(SUModelCreateFromFileWithStatus(&(res.model), f)) #, status))
         return res
 
     def save(self, filename):
