@@ -654,7 +654,7 @@ cdef class Face:
                 ind = int(i)
                 uv_list.append((stq[ind].x / z * self.s_scale, stq[ind].y / z * self.t_scale))
             triangles_list = []
-            for ii in range(index_count // 3):
+            for ii in range(int(index_count / 3)):
                 ind = int(ii * 3)
                 triangles_list.append((indices[ind], indices[ind + 1], indices[ind + 2]))
             free(vertices)
@@ -951,7 +951,7 @@ cdef class Model:
 
     @staticmethod
     def from_file(filename):
-        cdef SUModelLoadStatus* status = NULL
+        cdef SUModelLoadStatus* status
         res = Model(__skip_init=True)
         py_byte_string = filename.encode('UTF-8')
         cdef const char* f = py_byte_string
