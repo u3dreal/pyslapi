@@ -49,7 +49,6 @@ cdef extern from "SketchUpAPI/model/model.h":
 
     SU_RESULT SUModelCreate(SUModelRef* model)
     SU_RESULT SUModelCreateFromFile(SUModelRef* model, const char* file_path)
-    SU_RESULT SUModelCreateFromFileWithStatus(SUModelRef* model, const char* file_path, SUModelLoadStatus* status)
     SU_RESULT SUModelRelease(SUModelRef* model)
     #SUModelRef SUModelFromExisting(uintptr_t data)
     SU_RESULT SUModelGetEntities(SUModelRef model, SUEntitiesRef* entities)
@@ -100,3 +99,7 @@ cdef extern from "SketchUpAPI/model/model.h":
     SU_RESULT SUModelGetNumFonts(SUModelRef model, size_t* count)
     SU_RESULT SUModelGetFonts(SUModelRef model, size_t len, SUFontRef fonts[], size_t* count)
     SU_RESULT SUModelGetDimensionStyle(SUModelRef model, SUDimensionStyleRef* style)
+
+    # since SketchUp 2021, API
+
+    SU_RESULT SUModelCreateFromFileWithStatus(SUModelRef* model, const char* file_path, SUModelLoadStatus* status)
