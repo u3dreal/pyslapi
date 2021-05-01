@@ -943,7 +943,6 @@ cdef class LoopInput:
 
 cdef class Model:
     cdef SUModelRef model
-    cdef SUModelLoadStatus status
 
     def __cinit__(self, **kwargs):
         self.model.ptr = <void*> 0
@@ -952,11 +951,12 @@ cdef class Model:
 
     @staticmethod
     def from_file(filename):
+        cdef SUModelLoadStatus* status
         res = Model(__skip_init=True)
         py_byte_string = filename.encode('UTF-8')
         cdef const char* f = py_byte_string
         #check_result(SUModelCreateFromFile(&(res.model), f))
-        check_result(SUModelCreateFromFileWithStatus(&(res.model), f)) #, status))
+        check_result(SUModelCreateFromFileWithStatus(&(res.model), f, status))
         return res
 
     def save(self, filename):
