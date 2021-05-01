@@ -951,7 +951,7 @@ cdef class Model:
 
     @staticmethod
     def from_file(filename):
-        cdef SUModelLoadStatus* status
+        cdef SUModelLoadStatus* status = NULL
         res = Model(__skip_init=True)
         py_byte_string = filename.encode('UTF-8')
         cdef const char* f = py_byte_string
